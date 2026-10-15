@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>જન્મદિવસની ખૂબ ખૂબ શુભેચ્છાઓ! 🎉 પાર્ટી ટાઈમ!</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Canvas Confetti for celebration -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <!-- Tone.js for cheerful sound effects without external audio files -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+  <!-- Font Awesome for crisp icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts for Gujarati & English -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Vadodara:wght@400;500;600;700&family=Noto+Sans+Gujarati:wght@400;600;700;800;900&family=Fredoka:wght@600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            gujarati: ['"Noto Sans Gujarati"', '"Hind Vadodara"', 'sans-serif'],
+            fredoka: ['Fredoka', 'sans-serif'],
+          },
+          animation: {
+            'float-slow': 'float 4s ease-in-out infinite',
+            'wiggle': 'wiggle 0.8s ease-in-out infinite',
+            'pulse-fast': 'pulse 1.2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'pop': 'pop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+            'heartbeat': 'heartbeat 1.5s ease-in-out infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+              '50%': { transform: 'translateY(-12px) rotate(2deg)' },
+            },
+            wiggle: {
+              '0%, 100%': { transform: 'rotate(-4deg)' },
+              '50%': { transform: 'rotate(4deg)' },
+            },
+            heartbeat: {
+              '0%, 100%': { transform: 'scale(1)' },
+              '14%': { transform: 'scale(1.1)' },
+              '28%': { transform: 'scale(1)' },
+              '42%': { transform: 'scale(1.1)' },
+              '70%': { transform: 'scale(1)' },
+            },
+            pop: {
+              '0%': { opacity: 0, transform: 'scale(0.5)' },
+              '100%': { opacity: 1, transform: 'scale(1)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Noto Sans Gujarati', 'Hind Vadodara', sans-serif;
+      touch-action: manipulation;
+      user-select: none;
+      -webkit-user-select: none;
+      overflow-x: hidden;
+    }
+    
+    /* Festive background palette */
+    .bg-gradient-festive {
+      background: radial-gradient(circle at 15% 15%, #ffd6e0 0%, #ffedf2 35%, #e9d5ff 70%, #bae6fd 100%);
+    }
+
+    /* Floating speech bubble popup */
+    .taunt-bubble {
+      animation: floatUpFade 1.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+      pointer-events: none;
+    }
+
+    @keyframes floatUpFade {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, 12px) scale(0.7);
+      }
+      20% {
+        opacity: 1;
+        transform: translate(-50%, -10px) scale(1.05);
+      }
+      80% {
+        opacity: 1;
+        transform: translate(-50%, -25px) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -42px) scale(0.9);
+      }
+    }
+
+    /* Soft glassmorphism backdrop */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 2px solid rgba(255, 255, 255, 0.7);
+      box-shadow: 0 20px 45px -10px rgba(162, 110, 219, 0.25), 0 0 25px rgba(255, 182, 193, 0.35);
+    }
+  </style>
+</head>
+<body class="bg-gradient-festive min-h-screen w-full relative flex items-center justify-center p-4 overflow-hidden">
+
+  <!-- Ambient Floating Background Emojis -->
+  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none opacity-40">
+    <span class="absolute top-[8%] left-[10%] text-3xl md:text-5xl animate-float-slow" style="animation-delay: 0s;">🎈</span>
+    <span class="absolute top-[18%] right-[12%] text-4xl md:text-6xl animate-float-slow" style="animation-delay: 1.2s;">🎂</span>
+    <span class="absolute bottom-[20%] left-[8%] text-3xl md:text-5xl animate-float-slow" style="animation-delay: 2.1s;">🍰</span>
+    <span class="absolute bottom-[12%] right-[14%] text-4xl md:text-6xl animate-float-slow" style="animation-delay: 0.7s;">🧁</span>
+    <span class="absolute top-[48%] left-[4%] text-2xl md:text-4xl animate-float-slow" style="animation-delay: 1.8s;">✨</span>
+    <span class="absolute top-[40%] right-[6%] text-3xl md:text-5xl animate-float-slow" style="animation-delay: 2.5s;">🎁</span>
+    <span class="absolute bottom-[4%] left-[45%] text-2xl md:text-4xl animate-float-slow" style="animation-delay: 1.5s;">🎉</span>
+  </div>
+
+  <!-- Sound Toggle Control on Top Right -->
+  <button id="soundToggleBtn" class="fixed top-4 right-4 z-50 bg-white/80 hover:bg-white text-pink-600 px-3 py-2 rounded-full shadow-md text-xs sm:text-sm font-bold flex items-center gap-2 border border-pink-200 transition-all hover:scale-105 active:scale-95">
+    <i id="soundIcon" class="fa-solid fa-volume-high"></i>
+    <span id="soundText" class="hidden sm:inline">અવાજ: ચાલુ</span>
+  </button>
+
+  <!-- ================= MAIN ASKING CARD ================= -->
+  <main id="partyQuestionCard" class="relative z-10 w-full max-w-lg glass-card rounded-3xl p-6 sm:p-10 text-center transition-all duration-500 animate-pop">
+    
+    <!-- Decorative Crown Header Badge -->
+    <div class="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 text-white font-gujarati text-xs sm:text-sm font-bold px-4 py-1.5 rounded-full shadow-md mb-4 animate-pulse-fast">
+      <span>👑 ખાસ જન્મદિવસ આમંત્રણ 👑</span>
+    </div>
+
+    <!-- Birthday Cutout Avatar / Animated Mascot -->
+    <div class="relative w-28 h-28 sm:w-36 sm:h-36 mx-auto mb-4">
+      <div class="absolute inset-0 bg-pink-300 rounded-full blur-xl opacity-60 animate-pulse"></div>
+      <div class="relative w-full h-full rounded-full bg-white border-4 border-pink-300 p-2 shadow-inner flex items-center justify-center">
+        <!-- Playful Animated SVG Birthday Mascot -->
+        <svg viewBox="0 0 200 200" class="w-full h-full animate-wiggle">
+          <!-- Bear Face -->
+          <circle cx="65" cy="55" r="24" fill="#E0A96D"/>
+          <circle cx="65" cy="55" r="14" fill="#FFCDB2"/>
+          <circle cx="135" cy="55" r="24" fill="#E0A96D"/>
+          <circle cx="135" cy="55" r="14" fill="#FFCDB2"/>
+          <circle cx="100" cy="110" r="60" fill="#E0A96D"/>
+          <!-- Snout -->
+          <ellipse cx="100" cy="122" rx="26" ry="20" fill="#FFF2E2"/>
+          <ellipse cx="100" cy="114" rx="8" ry="6" fill="#4A3525"/>
+          <path d="M 94 123 Q 100 130 106 123" stroke="#4A3525" stroke-width="3" stroke-linecap="round" fill="none"/>
+          <!-- Blushing cheeks -->
+          <circle cx="74" cy="122" r="10" fill="#FF8BA7" opacity="0.6"/>
+          <circle cx="126" cy="122" r="10" fill="#FF8BA7" opacity="0.6"/>
+          <!-- Cheerful Eyes -->
+          <circle cx="82" cy="100" r="6" fill="#241E19"/>
+          <circle cx="80" cy="98" r="2" fill="#FFFFFF"/>
+          <circle cx="118" cy="100" r="6" fill="#241E19"/>
+          <circle cx="116" cy="98" r="2" fill="#FFFFFF"/>
+          <!-- Birthday Cone Hat -->
+          <polygon points="100,20 72,70 128,70" fill="#FF477E"/>
+          <polygon points="86,45 100,20 114,45" fill="#FFD166"/>
+          <!-- Hat Pom-pom -->
+          <circle cx="100" cy="18" r="9" fill="#06D6A0"/>
+        </svg>
+      </div>
+      <!-- Little Badge -->
+      <span class="absolute -bottom-1 -right-1 text-2xl filter drop-shadow">🎉</span>
+    </div>
+
+    <!-- Main Gujarati Headings -->
+    <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-800 tracking-tight leading-snug mb-2 font-gujarati">
+      જન્મદિવસની ખૂબ ખૂબ શુભેચ્છાઓ! <span class="text-pink-500 inline-block animate-wiggle">🎂✨</span>
+    </h1>
+
+    <h2 class="text-lg sm:text-2xl font-bold text-purple-700 mb-2 font-gujarati">
+      શું તું મને આજે મોટી પાર્ટી આપી રહી છે? 😉🎉
+    </h2>
+
+    <p class="text-gray-600 text-sm sm:text-base font-medium mb-5 font-gujarati">
+      ધ્યાનથી વિચારજે હોં! કેમ કે આજે 'ના' પાડવાનો તો કોઈ ચાન્સ જ નથી! 😜🍕
+    </p>
+
+    <!-- Attempt Counter -->
+    <div id="counterBadge" class="hidden inline-block mb-4 text-xs sm:text-sm font-bold text-purple-700 bg-purple-100 px-3.5 py-1.5 rounded-full border border-purple-200">
+      ભાગવાના પ્રયત્નો: <span id="escapeCount" class="font-extrabold text-pink-600">0</span> વખત 🏃💨
+    </div>
+
+    <!-- Buttons Playground Container -->
+    <div id="buttonContainer" class="relative flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 min-h-[90px] w-full pt-2">
+      
+      <!-- YES Button -->
+      <button 
+        id="yesBtn" 
+        class="w-full sm:w-auto min-w-[170px] px-8 py-3.5 bg-gradient-to-r from-emerald-500 via-teal-500 to-green-600 text-white font-gujarati text-lg sm:text-xl font-extrabold rounded-2xl shadow-lg shadow-emerald-500/30 hover:shadow-xl hover:shadow-emerald-500/50 active:scale-95 transition-all duration-200 flex items-center justify-center gap-2 animate-heartbeat hover:brightness-110 cursor-pointer"
+        aria-label="હા, ચોક્કસ!"
+      >
+        <span>હા, ચોક્કસ!</span>
+        <span class="text-2xl">🥳</span>
+      </button>
+
+      <!-- NO Button (The Runaway Button) -->
+      <button 
+        id="noBtn" 
+        class="w-full sm:w-auto min-w-[160px] px-7 py-3.5 bg-rose-50 hover:bg-rose-100 text-rose-600 font-gujarati text-base sm:text-lg font-bold rounded-2xl border-2 border-rose-200 shadow-sm transition-all duration-150 flex items-center justify-center gap-1.5 cursor-pointer select-none"
+        aria-label="ના, બિલકુલ નહિ!"
+      >
+        <span>ના, બિલકુલ નહિ! 😜</span>
+      </button>
+
+    </div>
+
+    <!-- Helpful Footer Hint in Gujarati -->
+    <p class="text-xs text-gray-400 mt-6 italic font-gujarati">
+      ટીપ: 'ના' વાળું બટન પકડવાની કોશિશ પણ ના કરતી, એ હાથમાં નહીં આવે! 🏃💨
+    </p>
+  </main>
+
+  <!-- ================= CELEBRATION MODAL / WINNER SCREEN ================= -->
+  <section 
+    id="celebrationModal" 
+    class="fixed inset-0 z-40 bg-purple-950/40 backdrop-blur-md hidden items-center justify-center p-4 overflow-y-auto"
+  >
+    <div class="relative w-full max-w-lg glass-card rounded-3xl p-6 sm:p-10 text-center shadow-2xl animate-pop border-2 border-pink-300/80 my-auto">
+      
+      <!-- Floating Ribbons / Trophy Emoji -->
+      <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-tr from-yellow-300 via-amber-400 to-pink-500 rounded-full flex items-center justify-center shadow-lg text-4xl animate-bounce">
+        🎁
+      </div>
+
+      <span class="inline-block bg-pink-100 text-pink-700 text-xs sm:text-sm font-extrabold uppercase px-4 py-1 rounded-full mb-3 tracking-wider font-gujarati">
+        યેય્ય્ય્ય્ય! પાકી પાર્ટી ફિક્સ! 🥳🎉
+      </span>
+
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 mb-3 leading-snug font-gujarati">
+        મને ખબર જ હતી કે તું <span class="text-pink-600 underline decoration-wavy decoration-pink-400">ના નહીં પાડે</span>! 😍💃
+      </h2>
+
+      <!-- Sweet Birthday message in Gujarati -->
+      <div class="bg-pink-50/90 rounded-2xl p-4 sm:p-5 border border-pink-200/80 mb-6 text-gray-700 text-sm sm:text-base leading-relaxed text-left font-gujarati">
+        <p class="font-bold text-pink-700 text-center text-lg mb-2">
+          પાર્ટી ક્વીનને જન્મદિવસની લાખ લાખ શુભેચ્છાઓ! 🌸🎂
+        </p>
+        <p class="mb-2">
+          ભગવાન કરે તારું આ નવું વર્ષ ખૂબ બધી ખુશીઓ, મીઠી યાદો, સફળતા અને ઢગલાબંધ સ્મિત લઈને આવે! ✨
+        </p>
+        <p class="text-center font-bold text-purple-700 mt-2">
+          હવે પાર્ટી તો ફિક્સ થઈ ગઈ, હવે તારા માટે એક ખાસ સરપ્રાઈઝ રાહ જોઈ રહ્યું છે... 🍕🥤
+        </p>
+      </div>
+
+      <!-- Action Buttons Row -->
+      <div class="flex flex-col gap-3">
+        <!-- Call to Action Link to Another Page / Surprise Link -->
+        <a 
+          id="surpriseLink" 
+          href="https://google.com" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="w-full py-4 px-6 bg-gradient-to-r from-amber-400 via-rose-500 to-purple-600 hover:from-amber-500 hover:to-purple-700 text-white font-gujarati text-base sm:text-lg font-bold rounded-2xl shadow-xl shadow-purple-500/30 flex items-center justify-center gap-3 transition-transform duration-200 active:scale-95 group"
+        >
+          <span>✨ તારું ખાસ સરપ્રાઈઝ જોવા અહીં ક્લિક કર ➔</span>
+          <i class="fa-solid fa-arrow-up-right-from-square group-hover:translate-x-1 transition-transform"></i>
+        </a>
+
+        <!-- Additional celebratory utility buttons -->
+        <div class="flex items-center gap-2 pt-2">
+          <button 
+            id="moreConfettiBtn" 
+            class="flex-1 py-2.5 px-4 bg-white/90 hover:bg-white text-pink-600 border border-pink-200 font-bold rounded-xl text-sm transition-all shadow-sm hover:shadow flex items-center justify-center gap-2 font-gujarati"
+          >
+            <span>ફરીથી ફટાકડા ફોડો!</span> 🎊
+          </button>
+          
+          <button 
+            id="replayBtn" 
+            class="py-2.5 px-4 bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold rounded-xl text-sm transition-all"
+            title="ફરીથી રમો"
+          >
+            <i class="fa-solid fa-rotate-left"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick note on customizing destination link in Gujarati -->
+      <div class="mt-5 text-[11px] text-gray-500 flex items-center justify-center gap-1.5 font-gujarati">
+        <i class="fa-solid fa-wand-magic-sparkles text-pink-400"></i>
+        <span>તમારું મનપસંદ સરપ્રાઈઝ લિંક (ફોટો, વિડીયો કે ગિફ્ટ) કોડમાં સરળતાથી બદલી શકાય છે!</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= JAVASCRIPT LOGIC ================= -->
+  <script>
+    // Configuration: You can easily change this target link to any page you want!
+    const SURPRISE_LINK = "https://tejvasava.github.io/Make_a_wish/"; // લિંક અહીં બદલી શકો છો (દા.ત. YouTube વિડીયો, ગ્રીટિંગ કાર્ડ, કે ફોટો આલ્બમ)
+
+    // Set the surprise URL
+    const surpriseLink = document.getElementById('surpriseLink');
+    if (surpriseLink) {
+      surpriseLink.href = SURPRISE_LINK;
+    }
+
+    // DOM Elements
+    const partyQuestionCard = document.getElementById('partyQuestionCard');
+    const celebrationModal = document.getElementById('celebrationModal');
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const counterBadge = document.getElementById('counterBadge');
+    const escapeCountSpan = document.getElementById('escapeCount');
+    const moreConfettiBtn = document.getElementById('moreConfettiBtn');
+    const replayBtn = document.getElementById('replayBtn');
+    const soundToggleBtn = document.getElementById('soundToggleBtn');
+    const soundIcon = document.getElementById('soundIcon');
+    const soundText = document.getElementById('soundText');
+
+    let escapeCount = 0;
+    let isSoundEnabled = true;
+    let synth = null;
+    let isNoFixed = false; // Whether the 'No' button is in fixed position mode
+
+    // Witty Gujarati taunt phrases when she tries to click "No"
+    const gujaratiTauntPhrases = [
+      "અરે વાહ! એમ થોડું પકડાય? 😜",
+      "ના ના, 'ના' પાડવાનો વિકલ્પ જ નથી! 😂",
+      "પાર્ટી તો આપવી જ પડશે હો! 🍕🍰",
+      "હાથમાં જ નથી આવતો બટન! 🏃💨",
+      "ચાલ હવે સીધી 'હા' કહી દે ને! 🥰",
+      "ઓહોહો! કેટલી સ્પીડ છે તારી! ⚡",
+      "ના પાડીશ તો ચાલશે જ નહીં! 🙅‍♀️",
+      "જોયું? બટન પણ મારી તરફ છે! 😎",
+      "ટ્રીટ આપ્યા વગર છુટકારો નથી! 🍫🧁",
+      "ચાલ ચાલ, હવે 'હા' વાળા બટન પર ક્લિક કર! ✨"
+    ];
+
+    // Initialize Tone.js synthesizer safely on user interaction
+    function initSynth() {
+      if (!synth && typeof Tone !== 'undefined') {
+        try {
+          synth = new Tone.PolySynth(Tone.Synth, {
+            oscillator: { type: "triangle" },
+            envelope: {
+              attack: 0.005,
+              decay: 0.1,
+              sustain: 0.05,
+              release: 0.2
+            }
+          }).toDestination();
+          synth.volume.value = -8;
+        } catch (e) {
+          console.warn("Audio Context init fallback", e);
+        }
+      }
+    }
+
+    // Play quick playful boing sound
+    function playBoingSound() {
+      if (!isSoundEnabled) return;
+      try {
+        initSynth();
+        if (Tone.context.state !== 'running') {
+          Tone.start();
+        }
+        if (synth) {
+          const notes = ["G5", "C6", "E6", "A5", "D6"];
+          const note = notes[Math.floor(Math.random() * notes.length)];
+          synth.triggerAttackRelease(note, "16n");
+        }
+      } catch (err) {
+        // Silent fall-through
+      }
+    }
+
+    // Play joyous celebration fanfare
+    function playVictoryMelody() {
+      if (!isSoundEnabled) return;
+      try {
+        initSynth();
+        if (Tone.context.state !== 'running') {
+          Tone.start();
+        }
+        if (synth) {
+          const now = Tone.now();
+          synth.triggerAttackRelease("C5", "8n", now);
+          synth.triggerAttackRelease("E5", "8n", now + 0.12);
+          synth.triggerAttackRelease("G5", "8n", now + 0.24);
+          synth.triggerAttackRelease("C6", "4n", now + 0.38);
+          synth.triggerAttackRelease(["E6", "G6"], "2n", now + 0.6);
+        }
+      } catch (err) {
+        // Silent fall-through
+      }
+    }
+
+    // Toggle Sound Button
+    soundToggleBtn.addEventListener('click', () => {
+      isSoundEnabled = !isSoundEnabled;
+      if (isSoundEnabled) {
+        soundIcon.className = 'fa-solid fa-volume-high';
+        soundText.innerText = 'અવાજ: ચાલુ';
+        soundToggleBtn.classList.remove('opacity-60');
+      } else {
+        soundIcon.className = 'fa-solid fa-volume-xmark';
+        soundText.innerText = 'અવાજ: બંધ';
+        soundToggleBtn.classList.add('opacity-60');
+      }
+    });
+
+    // Spawn floating playful message above the No button's previous spot
+    function spawnTauntBubble(x, y) {
+      const phrase = gujaratiTauntPhrases[Math.floor(Math.random() * gujaratiTauntPhrases.length)];
+      const bubble = document.createElement('div');
+      bubble.className = 'taunt-bubble fixed z-50 bg-white/95 text-rose-600 font-gujarati font-bold text-xs sm:text-sm px-3.5 py-1.5 rounded-full shadow-lg border border-pink-200 pointer-events-none select-none';
+      bubble.innerText = phrase;
+
+      // Position bubble centered at coordinates
+      bubble.style.left = `${x}px`;
+      bubble.style.top = `${y}px`;
+
+      document.body.appendChild(bubble);
+
+      // Remove after animation completes
+      setTimeout(() => {
+        if (bubble.parentNode) {
+          bubble.parentNode.removeChild(bubble);
+        }
+      }, 1300);
+    }
+
+    // Move the "No" button smoothly to a random location across the screen
+    function evadeNoButton(event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+
+      playBoingSound();
+
+      // Current rect before moving for spawn taunt
+      const prevRect = noBtn.getBoundingClientRect();
+      const tauntX = prevRect.left + prevRect.width / 2;
+      const tauntY = prevRect.top;
+
+      spawnTauntBubble(tauntX, tauntY);
+
+      // Increase attempt counter
+      escapeCount++;
+      escapeCountSpan.innerText = escapeCount;
+      if (counterBadge.classList.contains('hidden')) {
+        counterBadge.classList.remove('hidden');
+      }
+
+      // Convert to fixed positioning once escaped
+      if (!isNoFixed) {
+        // Reserve dimension to prevent card jumping
+        noBtn.style.width = `${prevRect.width}px`;
+        noBtn.style.height = `${prevRect.height}px`;
+        noBtn.style.position = 'fixed';
+        noBtn.style.zIndex = '9999';
+        isNoFixed = true;
+      }
+
+      // Calculate screen boundaries with safe padding
+      const padding = 24;
+      const btnWidth = noBtn.offsetWidth || 150;
+      const btnHeight = noBtn.offsetHeight || 50;
+
+      const maxX = window.innerWidth - btnWidth - padding;
+      const maxY = window.innerHeight - btnHeight - padding;
+
+      // Pick a new coordinate that is distinctly far from the current one
+      let newX = Math.floor(Math.random() * (maxX - padding)) + padding;
+      let newY = Math.floor(Math.random() * (maxY - padding)) + padding;
+
+      // Ensure minimum distance jump so it doesn't just jitter slightly
+      const dist = Math.hypot(newX - prevRect.left, newY - prevRect.top);
+      if (dist < 160) {
+        newX = (prevRect.left + 220) % maxX;
+        newY = (prevRect.top + 220) % maxY;
+      }
+
+      // Constrain inside viewport
+      newX = Math.max(padding, Math.min(newX, maxX));
+      newY = Math.max(padding, Math.min(newY, maxY));
+
+      // Apply transition and new coordinates
+      noBtn.style.transition = 'all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1)';
+      noBtn.style.left = `${newX}px`;
+      noBtn.style.top = `${newY}px`;
+
+      // Slightly increase the "Yes" button scale to encourage clicking it!
+      const currentScale = 1 + Math.min(escapeCount * 0.05, 0.35);
+      yesBtn.style.transform = `scale(${currentScale})`;
+    }
+
+    // Attach evasion listeners (mouse hover, touch start, pointer proximity)
+    noBtn.addEventListener('mouseenter', evadeNoButton);
+    noBtn.addEventListener('mouseover', evadeNoButton);
+    noBtn.addEventListener('touchstart', evadeNoButton, { passive: false });
+    noBtn.addEventListener('pointerdown', evadeNoButton);
+    noBtn.addEventListener('click', evadeNoButton);
+
+    // Desktop Proximity Sensor: if mouse comes within 60px of the button, escape ahead of time!
+    let lastProximityCheck = 0;
+    window.addEventListener('mousemove', (e) => {
+      const now = Date.now();
+      if (now - lastProximityCheck < 60) return; // throttle
+      lastProximityCheck = now;
+
+      const rect = noBtn.getBoundingClientRect();
+      const btnCenterX = rect.left + rect.width / 2;
+      const btnCenterY = rect.top + rect.height / 2;
+
+      const distance = Math.hypot(e.clientX - btnCenterX, e.clientY - btnCenterY);
+
+      // Distance threshold: 60 pixels radius
+      if (distance < 60) {
+        evadeNoButton(e);
+      }
+    });
+
+    // Celebration Confetti Cannon Effect
+    function triggerCelebrationConfetti() {
+      if (typeof confetti === 'undefined') return;
+
+      // Center burst
+      confetti({
+        particleCount: 130,
+        spread: 90,
+        origin: { y: 0.6 },
+        colors: ['#FF69B4', '#FFB6C1', '#BA55D3', '#FFD700', '#00CED1', '#10B981']
+      });
+
+      // Left & Right Cannons
+      const duration = 2.5 * 1000;
+      const end = Date.now() + duration;
+
+      (function frame() {
+        confetti({
+          particleCount: 4,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          colors: ['#FF1493', '#FF69B4', '#FFA07A', '#9370DB']
+        });
+        confetti({
+          particleCount: 4,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          colors: ['#FFD700', '#00FF7F', '#1E90FF', '#FF69B4']
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      })();
+    }
+
+    // Handle "YES" Click
+    yesBtn.addEventListener('click', () => {
+      // Hide runaway button completely
+      noBtn.style.display = 'none';
+
+      // Play victory audio & blast confetti
+      playVictoryMelody();
+      triggerCelebrationConfetti();
+
+      // Show celebration modal
+      celebrationModal.classList.remove('hidden');
+      celebrationModal.classList.add('flex');
+    });
+
+    // More Confetti Button
+    moreConfettiBtn.addEventListener('click', () => {
+      playVictoryMelody();
+      triggerCelebrationConfetti();
+    });
+
+    // Reset / Replay interaction
+    replayBtn.addEventListener('click', () => {
+      celebrationModal.classList.add('hidden');
+      celebrationModal.classList.remove('flex');
+
+      // Reset 'No' button positioning
+      noBtn.removeAttribute('style');
+      noBtn.style.display = 'flex';
+      isNoFixed = false;
+      escapeCount = 0;
+      escapeCountSpan.innerText = '0';
+      counterBadge.classList.add('hidden');
+      yesBtn.style.transform = 'scale(1)';
+    });
+
+    // Audio context pre-warming on any user touch/click
+    document.addEventListener('pointerdown', () => {
+      if (isSoundEnabled && Tone.context.state !== 'running') {
+        Tone.start();
+      }
+    }, { once: true });
+  </script>
+</body>
+</html>
